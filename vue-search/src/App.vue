@@ -1,20 +1,23 @@
 <template>
   <div class="bg-gray-100">
     <Header />
-    <main class="h-screen">
+    <main class="min-h-screen">
       <div class="container mx-auto">
         <router-view />
       </div>
     </main>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 export default {
   name: 'App',
   components: {
     Header,
+    Footer
   },
 };
 </script>
