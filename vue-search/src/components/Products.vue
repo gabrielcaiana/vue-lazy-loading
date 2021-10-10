@@ -1,4 +1,5 @@
 <template>
+  <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
     <article
       class="
         bg-white
@@ -11,6 +12,8 @@
         transform
         duration-200
       "
+      v-for="product in products"
+      :key="product.id"
     >
       <div class="relative w-full h-80 md:h-64 lg:h-44">
         <img
@@ -33,14 +36,16 @@
         >
           {{ product.description }}
         </p>
+        <span class="text-gray-500">{{ `R$:${product.price}` }}</span>
       </div>
     </article>
+  </section>
 </template>
 
 <script>
 export default {
   props: {
-    product: {
+    products: {
       type: Object,
       required: true,
     },

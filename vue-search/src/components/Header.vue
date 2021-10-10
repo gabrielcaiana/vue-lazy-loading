@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="w-screen flex justify-center py-4 mb-10 bg-white">
+    <ul class="w-screen flex justify-center py-4 mb-10 bg-white shadow-lg">
       <li
         v-for="(menu, index) in menus"
         :key="index"

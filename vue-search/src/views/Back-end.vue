@@ -1,12 +1,6 @@
 <template>
   <section>
-    <section class="grid md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8">
-      <Products
-        v-for="product in products"
-        :key="product.id"
-        :product="product"
-      />
-    </section>
+      <Products :products="products"/>
   </section>
 </template>
 
