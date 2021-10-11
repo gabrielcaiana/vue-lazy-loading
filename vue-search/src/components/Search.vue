@@ -34,7 +34,7 @@
       </svg>
       <input
         @keyup="search($event.target.value)"
-        class="bg-gray-100 outline-none"
+        class="bg-gray-100 outline-none w-full"
         type="text"
         placeholder="Procurar produto..."
       />

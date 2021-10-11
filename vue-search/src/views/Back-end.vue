@@ -13,16 +13,15 @@ export default {
     const products = ref([]);
 
     const filters = reactive({
-      s: '',
+      value: '',
     });
 
     const load = async filter => {
-      filters.s = filter
+      filters.value = filter
       const arr = []
 
-      if(filters.s.length) {
-        arr.push(`s=${filters.s}`)
-
+      if(filters.value.length) {
+        arr.push(`s=${filters.value}`)
       }
 
       const response = await fetch(`http://localhost:8000/api/products/backend?${arr.join("&")}`);
