@@ -1,5 +1,7 @@
 <template>
-  <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+  <div>
+    <Search @key-event="keyEvent" />
+  <section class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8"> 
     <article
       class="
         bg-white
@@ -23,32 +25,43 @@
         />
       </div>
       <div class="px-3 py-4">
-        <h3 class="text-sm text-gray-500 pb-2">
+        <h1 class="text-sm text-gray-500 pb-2">
           {{ product.title }}
-        </h3>
-        <p
-          class="
-            text-base
-            font-semibold
-            text-gray-900
-            group-hover:text-indigo-600
-          "
-        >
-          {{ product.description }}
-        </p>
+        </h1>
         <span class="text-gray-500">{{ `R$:${product.price}` }}</span>
       </div>
     </article>
   </section>
+</div>
 </template>
 
 <script>
+import Search from "@/components/Search"
 export default {
   props: {
     products: {
       type: Object,
       required: true,
     },
+    filters: {
+      type: Object
+    },
   },
+
+  components: {
+    Search
+  },
+
+  emits: ['set-filters'],
+
+  setup(props, { emit }) {
+    const keyEvent = e => {
+      emit("set-filters", e)
+    }
+
+    return {
+      keyEvent
+    }
+  }
 };
 </script>
