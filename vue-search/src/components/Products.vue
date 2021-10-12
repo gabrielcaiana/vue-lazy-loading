@@ -13,6 +13,7 @@
         hover:shadow-2xl
         transform
         duration-200
+        cursor-pointer
       "
       v-for="product in products"
       :key="product.id"
@@ -28,7 +29,7 @@
         <h1 class="text-sm text-gray-500 pb-2">
           {{ product.title }}
         </h1>
-        <span class="text-gray-500">{{ `R$:${product.price}` }}</span>
+        <span class="text-gray-500">{{ `R$${product.price}` }}</span>
       </div>
     </article>
   </section>

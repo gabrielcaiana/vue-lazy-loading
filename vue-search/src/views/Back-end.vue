@@ -34,8 +34,6 @@ export default {
       } catch (err) {
         throw Error(err);
       }
-
-      console.log(filters.value)
     };
 
     onMounted(() => load(filters));
