@@ -39,6 +39,28 @@
         placeholder="Procurar produto..."
       />
     </div>
+    <div class="w-60">
+      <select
+        class="
+          block
+          w-full
+          bg-grey-lighter
+          text-grey-darker
+          border border-grey-lighter
+          rounded-lg
+          h-12
+          px-4
+        "
+        @change="sort($event.target.value)"
+      >
+        <option>Selecionar</option>
+        <option value="asc">Menor preço</option>
+        <option value="desc">Maior preço</option>
+      </select>
+      <p class="text-sm text-red-500 hidden mt-3" id="error">
+        Please fill out this field.
+      </p>
+    </div>
   </div>
 </template>
 
@@ -47,12 +69,23 @@ export default {
   props: {},
   emits: ['key-event'],
   setup(props, { emit }) {
-    function search(e) {
-      emit('key-event', e);
+    function search(search) {
+      emit('key-event', {
+        search,
+        ...props.filters,
+      });
     }
+
+    const sort = (sort) => {
+      emit('key-event', {
+        sort,
+        ...props.filters,
+      });
+    };
 
     return {
       search,
+      sort,
     };
   },
 };

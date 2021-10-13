@@ -19,7 +19,8 @@ export default {
     const filteredProducts = ref([]);
 
     const filters = reactive({
-      s: '',
+      search: '',
+      sort: '',
     });
 
     onMounted(async () => {
@@ -40,14 +41,30 @@ export default {
     });
 
     const filteredChanged = (filter) => {
-      filters.s = filter;
+      filters.search = filter.search;
+      filters.sort = filter.sort;
 
-      let products = allProducts.value.filter(
-        (product) =>
-          product.title.toLowerCase().indexOf(filters.s.toLowerCase()) >= 0 ||
-          product.description.toLowerCase().indexOf(filters.s.toLowerCase()) >= 0
-      );
+      let products = allProducts.value;
+      
+      if(filters.search !== undefined) {
+         products = products.filter((product) => {
+          return product.title.toLowerCase().indexOf(filters.search.toLowerCase()) >=0 ||
+               product.description.toLowerCase().indexOf(filters.search.toLowerCase()) >= 0
+        })
+      }
 
+      if(filters.sort === "asc" || filters.sort === "desc") {
+        products.sort((a,b) => {
+          const diff = a.price -b.price
+          
+          if(diff === 0) return 0
+
+          const sign = Math.abs(diff) / diff
+
+          return filters.sort === "asc" ? sign : -sign
+        })
+      }
+        
       filteredProducts.value = products;
     };
 

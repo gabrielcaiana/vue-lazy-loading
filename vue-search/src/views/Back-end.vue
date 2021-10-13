@@ -13,18 +13,26 @@ export default {
     const products = ref([]);
 
     const filters = reactive({
-      value: '',
+      search: '',
+      sort: '',
     });
 
-    const load = async filter => {
-      filters.value = filter
-      const arr = []
+    const load = async (filter) => {
+      filters.search = filter.search;
+      filters.sort = filter.sort;
+      const arr = [];
 
-      if(filters.value.length) {
-        arr.push(`s=${filters.value}`)
+      if (filters.search) {
+        arr.push(`s=${filters.search}`);
       }
 
-      const response = await fetch(`http://localhost:8000/api/products/backend?${arr.join("&")}`);
+      if (filters.sort) {
+        arr.push(`sort=${filters.sort}`);
+      }
+
+      const response = await fetch(
+        `http://localhost:8000/api/products/backend?${arr.join('&')}`
+      );
 
       try {
         if (response.ok && response.status === 200) {
@@ -41,7 +49,7 @@ export default {
     return {
       products,
       filters,
-      load
+      load,
     };
   },
 };
