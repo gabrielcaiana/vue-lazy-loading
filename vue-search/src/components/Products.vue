@@ -33,6 +33,26 @@
         </div>
       </article>
     </section>
+    <div class="w-full flex items-center justify-center py-10">
+      <button
+        class="
+          p-2
+          pl-5
+          pr-5
+          transition-colors
+          duration-700
+          transform
+          bg-green-500
+          hover:bg-green-400
+          text-gray-100 text-lg
+          rounded-lg
+          focus:border-4
+          border-indigo-300
+        "
+      >
+        Carregar mais
+      </button>
+    </div>
   </div>
 </template>
 

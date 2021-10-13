@@ -21,6 +21,7 @@ export default {
     const filters = reactive({
       search: '',
       sort: '',
+      page: 1
     });
 
     onMounted(async () => {
