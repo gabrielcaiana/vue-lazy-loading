@@ -1,6 +1,6 @@
 <template>
   <section>
-    <Products :products="products" :filters="filters" @set-filters="load" />
+    <Products :products="products" :filters="filters" :lastPage="lastPage" @set-filters="load" />
   </section>
 </template>
 
@@ -18,9 +18,13 @@ export default {
       page: 1
     });
 
+    const lastPage = ref(0)
+
     const load = async (filter) => {
       filters.search = filter.search;
       filters.sort = filter.sort;
+      filters.page = filter.page
+
       const arr = [];
 
       if (filters.search) {
@@ -31,6 +35,10 @@ export default {
         arr.push(`sort=${filters.sort}`);
       }
 
+      if (filters.page) {
+        arr.push(`page=${filters.page}`);
+      }
+ 
       const response = await fetch(
         `http://localhost:8000/api/products/backend?${arr.join('&')}`
       );
@@ -38,7 +46,8 @@ export default {
       try {
         if (response.ok && response.status === 200) {
           const content = await response.json();
-          products.value = content.data;
+          products.value = filters.page === 1 ? content.data : [...products.value,...content.data]
+          lastPage.value = content.last_page
         }
       } catch (err) {
         throw Error(err);
@@ -51,6 +60,7 @@ export default {
       products,
       filters,
       load,
+      lastPage
     };
   },
 };

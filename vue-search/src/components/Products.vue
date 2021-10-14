@@ -33,7 +33,7 @@
         </div>
       </article>
     </section>
-    <div class="w-full flex items-center justify-center py-10">
+    <div class="w-full flex items-center justify-center py-10" v-if="filters.page < lastPage">
       <button
         class="
           p-2
@@ -49,6 +49,7 @@
           focus:border-4
           border-indigo-300
         "
+        @click="loadMore"
       >
         Carregar mais
       </button>
@@ -67,6 +68,9 @@ export default {
     filters: {
       type: Object,
     },
+    lastPage: {
+      type: Number,
+    },
   },
 
   components: {
@@ -80,11 +84,21 @@ export default {
       emit('set-filters', {
         search: e.search,
         sort: e.sort,
+        page: 1,
       });
+    };
+
+    const loadMore = () => {
+      emit('set-filters', {
+        ...props.filters,
+        page: props.filters.page + 1,
+      });
+      console.log(props);
     };
 
     return {
       keyEvent,
+      loadMore,
     };
   },
 };

@@ -71,6 +71,7 @@ export default {
   setup(props, { emit }) {
     function search(search) {
       emit('key-event', {
+        page: 1,
         search,
         ...props.filters,
       });
@@ -78,6 +79,7 @@ export default {
 
     const sort = (sort) => {
       emit('key-event', {
+        page: 1,
         sort,
         ...props.filters,
       });

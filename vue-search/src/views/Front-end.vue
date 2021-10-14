@@ -3,6 +3,7 @@
     <Products
       :products="filteredProducts"
       :filters="filters"
+      :lastPage="lastPage"
       @set-filters="filteredChanged"
     />
   </section>
@@ -24,6 +25,10 @@ export default {
       page: 1
     });
 
+    const perPage = 9
+    const lastPage = ref(0)
+
+    
     onMounted(async () => {
       const response = await fetch(
         'http://localhost:8000/api/products/frontend'
@@ -34,7 +39,8 @@ export default {
           const content = await response.json();
 
           allProducts.value = content;
-          filteredProducts.value = content;
+          filteredProducts.value = content.slice(0, filters.page * perPage);
+          lastPage.value = Math.ceil(content.length / perPage)
         }
       } catch (err) {
         throw Error(err);
@@ -44,6 +50,7 @@ export default {
     const filteredChanged = (filter) => {
       filters.search = filter.search;
       filters.sort = filter.sort;
+      filters.page = filter.page;
 
       let products = allProducts.value;
       
@@ -66,13 +73,15 @@ export default {
         })
       }
         
-      filteredProducts.value = products;
+      lastPage.value = Math.ceil(products.length / perPage)
+      filteredProducts.value = products.slice(0, filters.page * perPage);
     };
 
     return {
       filteredProducts,
       filters,
       filteredChanged,
+      lastPage
     };
   },
 };
